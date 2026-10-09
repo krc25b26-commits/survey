@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ページが見つかりません</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8f9fa;
+            font-family: Arial, "Hiragino Kaku Gothic ProN",
+                "Yu Gothic", Meiryo, sans-serif;
+            color: #333;
+        }
+
+        .error-container {
+            width: 90%;
+            max-width: 600px;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .error-code {
+            font-size: 80px;
+            font-weight: bold;
+            color: #f38ba8;
+            margin: 0 0 10px;
+        }
+
+        .error-title {
+            font-size: 28px;
+            margin: 0 0 20px;
+        }
+
+        .error-message {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 35px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 14px 35px;
+            background: #f38ba8;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+
+        .back-button:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 480px) {
+            .error-container {
+                padding: 40px 25px;
+            }
+
+            .error-code {
+                font-size: 65px;
+            }
+
+            .error-title {
+                font-size: 23px;
+            }
+
+            .error-message {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="error-container">
+
+        <p class="error-code">404</p>
+
+        <h1 class="error-title">ページが見つかりません</h1>
+
+        <p class="error-message">
+            申し訳ありません。<br>
+            お探しのページは存在しないか、<br>
+            移動または削除された可能性があります。
+        </p>
+
+
+    </div>
+
+</body>
+
+</html>

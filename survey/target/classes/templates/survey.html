@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>アンケート</title>
+	<link rel="stylesheet" th:href="@{/css/survey.css}">
+	<script th:src="@{/js/survey.js}"></script>
+</head>
+
+<body>
+
+	<div class="survey-container">
+
+		<div class="survey-header">
+			<h1>アンケート</h1>
+			<p>ご来店いただきありがとうございます。<br>
+				より良いサービスのため、アンケートにご協力ください。</p>
+		</div>
+
+		<form action="/survey/confirm" method="post" id="form" th:object="${form}">
+
+			<input type="hidden" name="storeName" th:value="${store.name}">
+			<input type="hidden" name="storeId" th:value="${store.id}">
+			<!-- 店舗名 -->
+			<div class="form-group">
+				<label for="storeName">店舗名</label>
+				<div id="storeName" class="store-name" th:text="${store.name}"></div>
+			</div>
+
+
+			<!-- 名前 -->
+			<div class="form-group">
+				<label for="name">お名前
+					<span class="required">必須</span>
+				</label>
+				<span class="form-help">20文字以内で入力してください</span>
+				<input type="text" id="name" name="name" th:field="*{name}" placeholder="お名前を入力してください">
+				<div th:if="*{#fields.hasErrors('name')}" th:errors="*{name}" style="color: #f38ba8;"></div>
+			</div>
+
+			<!-- 年齢層 -->
+			<div class="form-group">
+				<div class="question-title">年齢層
+					<span class="required">必須</span>
+					<div th:if="*{#fields.hasErrors('age')}" th:errors="*{age}" style="color: #f38ba8;"></div>
+				</div>
+
+				<div class="radio-list">
+					<th:block th:each="age : ${ageList}">
+						<div class="radio-item">
+							<input type="radio" name="age" th:id="'age-' + ${age.id}" th:value="${age.id}"
+								th:field="${form.age}">
+							<label th:for="'age-' + ${age.id}" th:text="${age.label}">
+							</label>
+						</div>
+					</th:block>
+				</div>
+			</div>
+
+			<!-- 来店目的 -->
+			<div class="form-group">
+				<div class="question-title">来店目的
+					<span class="required">必須</span>
+					<div th:if="*{#fields.hasErrors('purpose')}" th:errors="*{purpose}" style="color: #f38ba8;"></div>
+
+				</div>
+				<span class="form-help">複数選択可</span>
+
+				<div class="checkbox-list">
+					<th:block th:each="purpose : ${purposeList}">
+						<div class="checkbox-item">
+							<input type="checkbox" th:id="'purpose-' + ${purpose.id}" th:value="${purpose.id}"
+								th:field="*{purpose}">
+							<label th:for="'purpose-' + ${purpose.id}" th:text="${purpose.name}">
+							</label>
+						</div>
+					</th:block>
+				</div>
+			</div>
+
+			<!-- 来店頻度 -->
+			<div class="form-group">
+				<label for="frequency">来店頻度
+					<span class="required">必須</span>
+					<div th:if="*{#fields.hasErrors('frequency')}" th:errors="*{frequency}" style="color: #f38ba8;">
+					</div>
+				</label>
+
+				<select id="frequency" name="frequency" th:field="*{frequency}">
+					<option value="">選択してください</option>
+
+					<th:block th:each="frequency : ${frequencyList}">
+						<option th:value="${frequency.id}" th:text="${frequency.label}">
+						</option>
+					</th:block>
+				</select>
+			</div>
+
+			<!-- 料理の満足度 -->
+			<div class="form-group">
+				<div class="question-title">料理の満足度
+					<span class="required">必須</span>
+					<div th:if="*{#fields.hasErrors('food')}" th:errors="*{food}" style="color: #f38ba8;"></div>
+				</div>
+
+				<div class="rating-list">
+
+					<span class="rating-label">不満</span>
+
+					<th:block th:each="i : ${#numbers.sequence(1, 5)}">
+
+						<label class="rating-item">
+
+							<input type="radio" name="food" th:value="${i}" th:field="*{food}">
+
+							<span th:text="${i}"></span>
+
+						</label>
+
+					</th:block>
+
+					<span class="rating-label">満足</span>
+
+				</div>
+
+				<!-- 接客の満足度 -->
+				<div class="form-group">
+					<div class="question-title">接客の満足度
+						<span class="required">必須</span>
+						<div th:if="*{#fields.hasErrors('service')}" th:errors="*{service}" style="color: #f38ba8;">
+						</div>
+					</div>
+
+					<div class="rating-list">
+
+						<span class="rating-label">不満</span>
+
+						<th:block th:each="i : ${#numbers.sequence(1, 5)}">
+
+							<label class="rating-item">
+
+								<input type="radio" name="service" th:value="${i}" th:field="*{service}">
+
+								<span th:text="${i}"></span>
+
+							</label>
+
+						</th:block>
+
+						<span class="rating-label">満足</span>
+
+					</div>
+					<!-- 店内の清潔感 -->
+					<div class="form-group">
+						<div class="question-title">店内の清潔感
+							<span class="required">必須</span>
+							<div th:if="*{#fields.hasErrors('cleanliness')}" th:errors="*{cleanliness}"
+								style="color: #f38ba8;">
+							</div>
+						</div>
+
+						<div class="rating-list">
+
+							<span class="rating-label">不満</span>
+
+							<th:block th:each="i : ${#numbers.sequence(1, 5)}">
+
+								<label class="rating-item">
+
+									<input type="radio" name="cleanliness" th:value="${i}" th:field="*{cleanliness}">
+
+									<span th:text="${i}"></span>
+
+								</label>
+
+							</th:block>
+
+							<span class="rating-label">満足</span>
+
+						</div>
+						<!-- 長崎限定 -->
+						<div th:if="${store.id == 4}" class="special-section">
+							<div class="form-group">
+								<div class="question-title">
+									【長崎限定】バカうまハンバーグを注文しましたか？
+									<span class="optional">任意</span>
+								</div>
+								<div class="radio-list">
+									<div class="radio-item">
+										<input type="radio" name="hamburgOrder" id="order-yes" value="true"
+											th:field="*{hamburgOrder}">
+										<label for="order-yes">はい</label>
+									</div>
+									<div class="radio-item">
+										<input type="radio" name="hamburgOrder" id="order-no" value="false"
+											th:field="*{hamburgOrder}">
+										<label for="order-no">いいえ</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group" id="able">
+								<div class="question-title">ハンバーグの満足度
+									<span class="optional">任意</span>
+								</div>
+								<div class="rating-list">
+									<th:block th:each="i : ${#numbers.sequence(1, 5)}">
+										<label class="rating-item">
+											<input type="radio" name="hamburgSatisfaction" th:value="${i}"
+												th:field="*{hamburgSatisfaction}">
+											<span th:text="${i}"></span>
+										</label>
+									</th:block>
+								</div>
+							</div>
+						</div>
+						<!-- おすすめメニュー -->
+						<div class="form-group">
+							<label for="menu">おすすめメニュー
+								<span class="optional">任意</span>
+							</label>
+							<input type="text" id="menu" name="menu" placeholder="おすすめのメニューがあれば教えてください"
+								th:field="*{menu}">
+						</div>
+						<!-- ご意見・感想 -->
+						<div class="form-group">
+							<label for="comment">ご意見・ご感想
+								<span class="optional">任意</span>
+							</label>
+							<textarea id="comment" name="comment" rows="5" placeholder="ご意見・ご感想をご入力ください"
+								th:field="*{comment}"></textarea>
+						</div>
+						<!-- メールアドレス -->
+						<div class="form-group">
+							<label for="email">メールアドレス
+								<span class="required">必須</span>
+							</label>
+							<input type="email" id="email" name="email" placeholder="example@example.com"
+								th:field="${form.email}">
+							<div th:if="*{#fields.hasErrors('email')}" th:errors="*{email}" style="color: #f38ba8;">
+							</div>
+						</div>
+						<!-- 同意 -->
+						<div class="agreement">
+							<input type="checkbox" id="agreement" name="agreementFlg" value="true"
+								th:field="*{agreementFlg}">
+							<label for="agreement">
+								<a href="#" target="_blank">利用規約</a>と<a href="#" target="_blank">プライバシーポリシー</a>に同意する
+								<span class="required">必須</span>
+								<div th:if="*{#fields.hasErrors('agreementFlg')}" th:errors="*{agreementFlg}"
+									style="color: #f38ba8;"></div>
+							</label>
+						</div>
+						<!-- 送信 -->
+						<button type="submit" class="submit-button">
+							アンケートを送信する
+						</button>
+		</form>
+	</div>
+</body>
+
+</html>

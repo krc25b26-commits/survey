@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>アンケート確認</title>
+	<link rel="stylesheet" th:href="@{/css/confirm.css}">
+	<script th:src="@{/js/confirm.js}"></script>
+</head>
+
+<body>
+
+	<div class="confirm-container">
+
+		<div class="confirm-header">
+			<h1>アンケート内容の確認</h1>
+			<p>
+				以下の内容で送信します。<br>
+				内容をご確認ください。
+			</p>
+		</div>
+
+		<!-- formを追加 -->
+
+
+		<div class="confirm-list" th:object="${dto}">
+			
+
+
+			<!-- 店舗名 -->
+			<div class="confirm-item">
+				<div class="confirm-label">店舗名</div>
+				<div class="confirm-value" th:text="*{store.name}">店舗名</div>
+			</div>
+
+			<!-- 名前 -->
+			<div class="confirm-item">
+				<div class="confirm-label">お名前</div>
+				<div class="confirm-value" th:text="*{name}">山田 太郎</div>
+			</div>
+
+			<!-- 年齢層 -->
+			<div class="confirm-item">
+				<div class="confirm-label">年齢層</div>
+				<div class="confirm-value" th:text="*{ageGroupLabel}">20代</div>
+			</div>
+
+			<!-- 来店目的 -->
+			<div class="confirm-item">
+				<div class="confirm-label">来店目的</div>
+				<div class="confirm-value">
+					<span th:each="name : *{purposeNames}">
+						<span th:text="${name}">
+						</span>
+						<br>
+					</span>
+				</div>
+			</div>
+
+			<!-- 来店頻度 -->
+			<div class="confirm-item">
+				<div class="confirm-label">来店頻度</div>
+				<div class="confirm-value" th:text="*{frequencyLabel}"></div>
+			</div>
+
+
+			<!-- 料理の満足度 -->
+			<div class="confirm-item">
+				<div class="confirm-label">料理の満足度</div>
+				<div class="confirm-value rating" th:text="*{food + ' / 5'}"></div>
+			</div>
+
+			<!-- 接客の満足度 -->
+			<div class="confirm-item">
+				<div class="confirm-label">接客の満足度</div>
+				<div class="confirm-value rating" th:text="*{service + ' / 5'}"></div>
+			</div>
+
+			<!-- 店内の清潔感 -->
+			<div class="confirm-item">
+				<div class="confirm-label">店内の清潔感</div>
+				<div class="confirm-value rating" th:text="*{cleanliness + ' / 5'}"></div>
+			</div>
+
+			<!-- 長崎限定 -->
+			<div class="special-confirm" th:if="*{store.id == 4}">
+
+				<div class="special-title">
+					【長崎限定】
+				</div>
+
+				<div class="confirm-item">
+					<div class="confirm-label">
+						バカうまハンバーグを注文しましたか？
+					</div>
+
+					<div class="confirm-value" th:if="*{hamburgOrder == null}" th:text="未回答"></div>
+
+					<div class="confirm-value" th:if="*{hamburgOrder}" th:text="はい"></div>
+
+					<div class="confirm-value" th:if="*{hamburgOrder == false}" th:text="いいえ"></div>
+				</div>
+
+				<div class="confirm-item" th:if="*{hamburgOrder}">
+					<div class="confirm-label">
+						ハンバーグの満足度
+					</div>
+					<div class="confirm-value rating" th:if="*{hamburgOrder && hamburgSatisfaction == null}"
+						th:text="未回答"></div>
+					<div class="confirm-value rating" th:if="*{hamburgOrder && hamburgSatisfaction != null}"
+						th:text="*{hamburgSatisfaction + ' / 5'}"></div>
+				</div>
+
+			</div>
+
+			<!-- おすすめメニュー -->
+			<div class="confirm-item">
+				<div class="confirm-label">
+					おすすめメニュー
+				</div>
+				<div class="confirm-value" th:if="*{menu != ''}" th:text="*{menu}"></div>
+				<div class="confirm-value" th:if="*{menu == ''}" th:text="未回答"></div>
+			</div>
+
+			<!-- ご意見 -->
+			<div class="confirm-item">
+				<div class="confirm-label">
+					ご意見・ご感想
+				</div>
+				<div class="confirm-value comment" th:if="*{comment != ''}" th:text="*{comment}"></div>
+				<div class="confirm-value comment" th:if="*{comment == ''}" th:text="未回答"></div>
+			</div>
+
+			<!-- メールアドレス -->
+			<div class="confirm-item">
+				<div class="confirm-label">メールアドレス</div>
+				<div class="confirm-value" th:text="*{email}"></div>
+			</div>
+
+		</div>
+
+
+		<!-- 利用規約 -->
+		<div class="confirm-item">
+
+			<div class="confirm-label">
+				利用規約
+			</div>
+
+			<div class="confirm-value" th:text="同意済み">
+			</div>
+
+		</div>
+
+		<form action="/survey/complete" th:object="${form}" method="post">
+			<input type="hidden" name="storeId" th:value="*{storeId}">
+			<input type="hidden" name="name" th:value="*{name}">
+			<input type="hidden" name="age" th:value="*{age}">
+			<th:block th:each="value : *{purpose}">
+				<input type="hidden" name="purpose" th:value="${value}">
+			</th:block>
+			<input type="hidden" name="frequency" th:value="*{frequency}">
+			<input type="hidden" name="food" th:value="*{food}">
+			<input type="hidden" name="service" th:value="*{service}">
+			<input type="hidden" name="cleanliness" th:value="*{cleanliness}">
+			<input type="hidden" name="menu" th:value="*{menu}">
+			<input type="hidden" name="hamburgOrder" th:value="*{hamburgOrder}">
+			<input type="hidden" name="hamburgSatisfaction" th:value="*{hamburgSatisfaction}">
+			<input type="hidden" name="comment" th:value="*{comment}">
+			<input type="hidden" name="email" th:value="*{email}">
+			<input type="hidden" name="agreementFlg" th:value="*{agreementFlg}">
+			
+			<!-- ボタン -->
+			<div class="button-area">
+
+				<!-- 戻る -->
+				<button type="submit" formaction="/survey" name="action" value="back" class="back-button">
+					回答を編集する
+				</button>
+
+				<!-- 送信 -->
+				<button type="submit" name="action" value="submit" class="submit-button">
+					この内容で送信する
+				</button>
+
+			</div>
+
+		</form>
+
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,169 @@
+@charset "UTF-8";
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 40px 20px;
+    background-color: #f5f7fa;
+    font-family: Arial, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    color: #333;
+}
+
+.confirm-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.confirm-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.confirm-header h1 {
+    margin: 0 0 15px;
+    font-size: 28px;
+}
+
+.confirm-header p {
+    margin: 0;
+    color: #666;
+    line-height: 1.8;
+}
+
+.confirm-list {
+    border-top: 1px solid #ddd;
+}
+
+.confirm-item {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: 65px;
+    border-bottom: 1px solid #ddd;
+}
+
+.confirm-label {
+    padding: 20px;
+    background-color: #f7f9fc;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.confirm-value {
+    padding: 20px;
+    line-height: 1.6;
+    word-break: break-word;
+}
+
+.rating {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.comment {
+    white-space: pre-wrap;
+}
+
+.optional {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 3px 8px;
+    background-color: #6c757d;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.special-confirm {
+    margin: 25px 0;
+    border: 2px solid #e5a23c;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.special-title {
+    padding: 12px 20px;
+    background-color: #fff4df;
+    color: #9a6500;
+    font-weight: bold;
+}
+
+.special-confirm .confirm-item {
+    border-bottom: 1px solid #ddd;
+}
+
+.special-confirm .confirm-item:last-child {
+    border-bottom: none;
+}
+
+.button-area {
+    display: flex;
+    gap: 15px;
+    margin-top: 35px;
+}
+
+.back-button,
+.submit-button {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.back-button {
+    background-color: #e9ecef;
+    color: #333;
+}
+
+.submit-button {
+    background-color: #3477ae;
+    color: #fff;
+}
+
+.back-button:hover {
+    background-color: #d9dde1;
+}
+
+.submit-button:hover {
+    background-color: #286090;
+}
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 20px 10px;
+    }
+
+    .confirm-container {
+        padding: 25px 15px;
+    }
+
+    .confirm-header h1 {
+        font-size: 23px;
+    }
+
+    .confirm-item {
+        grid-template-columns: 1fr;
+    }
+
+    .confirm-label {
+        padding: 12px 15px;
+    }
+
+    .confirm-value {
+        padding: 15px;
+    }
+
+    .button-area {
+        flex-direction: column-reverse;
+    }
+}
