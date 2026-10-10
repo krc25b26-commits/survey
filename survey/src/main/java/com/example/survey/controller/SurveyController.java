@@ -103,7 +103,7 @@ public class SurveyController {
 		return "complete";
 	}
 
-	@GetMapping(/"response")
+	@GetMapping("/response")
 	public String response(Model model) {
 		model.addAttribute("list", surveyService.findAll());
 		return "response";
