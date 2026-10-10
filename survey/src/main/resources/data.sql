@@ -1,3 +1,5 @@
+delete from store_master where id = 1;
+
 INSERT INTO store_master (id, name)
 VALUES (1 , '東京支点')
 ON CONFLICT DO NOTHING;
