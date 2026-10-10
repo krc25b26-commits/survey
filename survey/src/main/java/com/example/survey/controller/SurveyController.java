@@ -102,4 +102,8 @@ public class SurveyController {
 	public String complete() {
 		return "complete";
 	}
+
+	@GetMapping(/response)
+	public String response(Model model) {
+		model.addAttribute("list", );
 }
