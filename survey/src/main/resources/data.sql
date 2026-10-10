@@ -9,3 +9,7 @@ ON CONFLICT DO NOTHING;
 insert into age_master(id, label)
 values(1, '10代')
 ON CONFLICT DO NOTHING;
+
+insert into frequency(id, label)
+values(1, '初めて')
+ON CONFLICT DO NOTHING;
