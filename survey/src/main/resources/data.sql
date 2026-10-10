@@ -1,7 +1,6 @@
-delete from store_master where id = 1;
 
 INSERT INTO store_master (id, name)
-VALUES (1 , '東京支点')
+VALUES (1 , '東京支店')
 ON CONFLICT DO NOTHING;
 INSERT INTO store_master (id, name)
 VALUES (2, '大阪支店')
