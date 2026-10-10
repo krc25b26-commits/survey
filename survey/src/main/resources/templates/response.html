@@ -20,7 +20,7 @@
     <tbody>
       <tr th:each="value : ${list}">
         <td th:text="${value.name}"></td>
-        <td th:text="${#temporals.format(value.date, 'yyyy/MM/dd HH:mm')}"></td>
+        <td th:text="${value.date}"></td>
       </tr>
     </tbody>
   </table>
