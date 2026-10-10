@@ -60,7 +60,7 @@ public class SurveyService {
 		return surveyResponseRepository.findMaxId();
 	}
 
-	public List<SurveyResponseEntiyy> findAll() {
+	public List<SurveyResponseEntity> findAll() {
 		return surveyResponseRepository.findAll();
 	}
 	
