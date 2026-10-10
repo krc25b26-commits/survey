@@ -59,6 +59,10 @@ public class SurveyService {
 	public Integer findByResponseId() {
 		return surveyResponseRepository.findMaxId();
 	}
+
+	public List<SurveyResponseEntiyy> findAll() {
+		return surveyResponseRepository.findAll();
+	}
 	
 	public SurveyDto setDto(SurveyForm form) {
 		
