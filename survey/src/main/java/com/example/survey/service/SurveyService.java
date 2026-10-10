@@ -98,7 +98,7 @@ public class SurveyService {
 
 	//	時刻取得
 	private String getTime() {
-		LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
+		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
 		DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
 		return now.format(f);
