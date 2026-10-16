@@ -54,6 +54,7 @@ public class SurveyService {
 		entity.setFrequency(frequencyEntity);
 		entity.setStore(storeEntity);
 		entity.setDate(getTime());
+		entity.setImagePath(form.getImagePath());
 
 		return entity;
 	}
@@ -86,6 +87,7 @@ public class SurveyService {
 		dto.setFrequencyLabel(frequency.getLabel());
 		
 		log.info("dto：{}", dto);
+		dto.setImagePath(form.getImagePath());
 		
 		return dto;
 		
