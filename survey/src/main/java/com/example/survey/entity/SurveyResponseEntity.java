@@ -65,6 +65,5 @@ public class SurveyResponseEntity {
 private String imagePath;
 
 
-// SurveyDto
-private String imagePath;
+
 }
