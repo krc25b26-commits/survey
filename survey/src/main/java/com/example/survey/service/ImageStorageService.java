@@ -7,7 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Set;
 import java.util.UUID;
-
+import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,4 +57,13 @@ public class ImageStorageService {
     public String publicUrl(String path) {
         return supabaseUrl + "/storage/v1/object/public/" + bucket + "/" + path;
     }
+
+    
+
+private static final Pattern PATH_PATTERN =
+    Pattern.compile("^[0-9a-f\\-]{36}\\.(jpg|png|webp)$");
+
+public boolean isValidPath(String path) {
+    return path != null && PATH_PATTERN.matcher(path).matches();
+}
 }
