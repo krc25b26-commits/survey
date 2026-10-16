@@ -64,8 +64,6 @@ public class SurveyResponseEntity {
 @Column(name = "image_path")
 private String imagePath;
 
-// SurveyForm
-private String imagePath;
 
 // SurveyDto
 private String imagePath;
