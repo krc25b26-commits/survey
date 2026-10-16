@@ -73,15 +73,21 @@ public class SurveyController {
 	
 
 	@PostMapping("/complete")
-public String complete(@ModelAttribute("form") SurveyForm form, ...) {
-    if (!imageStorageService.isValidPath(form.getImagePath())) {
-        form.setImagePath(null);   // 不正な値は保存しない
-    }
-    // 以降は既存のまま
-		surveyService.save(surveyService.setEntity(form));
-		purposeService.save(form.getPurpose(), surveyService.findByResponseId());
+public String complete(@ModelAttribute("form") SurveyForm form, @RequestParam(required = false) String action, Model model) {
 
-		return "redirect:/survey/complete";
+	// 画像のパスが書き換えられていたら捨てる
+	if (!imageStorageService.isValidPath(form.getImagePath())) {
+		form.setImagePath(null);
+	}
+
+	log.info("{}", form);
+	log.info("{}", surveyService.setEntity(form));
+	log.info("id:{}", surveyService.findByResponseId());
+
+	surveyService.save(surveyService.setEntity(form));
+	purposeService.save(form.getPurpose(), surveyService.findByResponseId());
+
+	return "redirect:/survey/complete";
 }
 	
 	@GetMapping("/complete")
