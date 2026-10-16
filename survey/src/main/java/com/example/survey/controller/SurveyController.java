@@ -67,25 +67,7 @@ public class SurveyController {
 		return "survey";
 	}
 
-	@PostMapping("/confirm")
-	public String confirm(@Valid @ModelAttribute("form") SurveyForm form, BindingResult result, Model model) {
-		
-		if (result.hasErrors()) {
-			model.addAttribute("ageList", ageService.findAll());
-			model.addAttribute("purposeList", purposeService.findAll());
-			model.addAttribute("frequencyList", frequencyService.findAll());
-			model.addAttribute("store", setStore(form.getStoreId()));
-			return "survey";
-		}
-		
-		model.addAttribute("dto", surveyService.setDto(form));
-
-		log.info("form{}", form);
-		log.info("??{}", form.getStoreId());
-
-		return "confirm";
-	}
-
+	
 	@PostMapping("/complete")
 	public String complete(@ModelAttribute("form") SurveyForm form, @RequestParam(required = false) String action, Model model) {
 		
@@ -134,9 +116,19 @@ public String confirm(@Valid @ModelAttribute("form") SurveyForm form, BindingRes
         }
     }
 
-    if (result.hasErrors()) {
-        // 既存のまま(リストをmodelに入れて "survey" を返す)
-    }
-    // 以降も既存のまま
+   if (result.hasErrors()) {
+			model.addAttribute("ageList", ageService.findAll());
+			model.addAttribute("purposeList", purposeService.findAll());
+			model.addAttribute("frequencyList", frequencyService.findAll());
+			model.addAttribute("store", setStore(form.getStoreId()));
+			return "survey";
+		}
+		
+		model.addAttribute("dto", surveyService.setDto(form));
+
+		log.info("form{}", form);
+		log.info("??{}", form.getStoreId());
+
+		return "confirm";
 }
 }
