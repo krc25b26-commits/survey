@@ -36,4 +36,6 @@ public class SurveyDto {
 	Boolean hamburgOrder;
 	
 	Integer hamburgSatisfaction;
+
+	private String imagePath;
 }
