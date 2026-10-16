@@ -20,6 +20,11 @@ import com.example.survey.service.StoreService;
 import com.example.survey.service.SurveyService;
 import com.example.survey.SurveyDto;
 
+import java.util.Map;
+import java.util.HashMap;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -101,10 +106,31 @@ log.info("画像パスの形式が正しいか: {}",
 	}
 
 	@GetMapping("/response")
-	public String response(Model model) {
-		model.addAttribute("list", surveyService.findAll());
-		return "response";
-	}
+public String response(Model model) {
+
+    // データベースから回答一覧を取得
+    var list = surveyService.findAll();
+
+    model.addAttribute("list", list);
+
+    // 保存された写真の表示URLを作成
+    Map<String, String> imageUrls = new HashMap<>();
+
+    for (var response : list) {
+        String imagePath = response.getImagePath();
+
+        if (imagePath != null && !imagePath.isBlank()) {
+            imageUrls.put(
+                imagePath,
+                imageStorageService.publicUrl(imagePath)
+            );
+        }
+    }
+
+    model.addAttribute("imageUrls", imageUrls);
+
+    return "response";
+}
 
 	@PostMapping("/confirm")
 public String confirm(@Valid @ModelAttribute("form") SurveyForm form, BindingResult result,
