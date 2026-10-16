@@ -18,6 +18,7 @@ import com.example.survey.service.FrequencyService;
 import com.example.survey.service.PurposeService;
 import com.example.survey.service.StoreService;
 import com.example.survey.service.SurveyService;
+import com.example.survey.SurveyDto;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -142,7 +143,16 @@ log.info("画像パス: {}", form.getImagePath());
 			return "survey";
 		}
 		
-		model.addAttribute("dto", surveyService.setDto(form));
+		SurveyDto dto = surveyService.setDto(form);
+model.addAttribute("dto", dto);
+
+if (dto.getImagePath() != null
+        && !dto.getImagePath().isBlank()) {
+    model.addAttribute(
+        "imageUrl",
+        imageStorageService.publicUrl(dto.getImagePath())
+    );
+}
 
 		log.info("form{}", form);
 		log.info("??{}", form.getStoreId());
