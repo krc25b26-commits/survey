@@ -76,7 +76,9 @@ public class SurveyController {
 
 	@PostMapping("/complete")
 public String complete(@ModelAttribute("form") SurveyForm form, @RequestParam(required = false) String action, Model model) {
-
+log.info("完了処理で受信した画像パス: {}", form.getImagePath());
+log.info("画像パスの形式が正しいか: {}",
+    imageStorageService.isValidPath(form.getImagePath()));
 	// 画像のパスが書き換えられていたら捨てる
 	if (!imageStorageService.isValidPath(form.getImagePath())) {
 		form.setImagePath(null);
@@ -126,7 +128,12 @@ public String confirm(@Valid @ModelAttribute("form") SurveyForm form, BindingRes
             result.rejectValue("imagePath", "image.failed", "画像のアップロードに失敗しました");
         }
     }
-
+log.info("バリデーションエラー: {}", result.getAllErrors());
+log.info("画像ファイル: {}",
+    imageFile == null ? "null" : imageFile.getOriginalFilename());
+log.info("画像サイズ: {}",
+    imageFile == null ? 0 : imageFile.getSize());
+log.info("画像パス: {}", form.getImagePath());
    if (result.hasErrors()) {
 			model.addAttribute("ageList", ageService.findAll());
 			model.addAttribute("purposeList", purposeService.findAll());
