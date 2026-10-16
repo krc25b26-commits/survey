@@ -133,12 +133,14 @@
 			</div>
 
 			<!-- 写真 -->
-<div class="confirm-item" th:if="${dto.imagePath != null}">
-	<div class="confirm-label">写真</div>
-	<div class="confirm-value">
-		<img th:src="${@imageStorageService.publicUrl(dto.imagePath)}"
-		     alt="添付した写真" style="max-width: 300px;">
-	</div>
+<div class="confirm-item" th:if="${imageUrl != null}">
+    <div class="confirm-label">写真</div>
+    <div class="confirm-value">
+        <img th:src="${imageUrl}"
+             alt="添付した写真"
+             style="max-width: 300px;">
+    </div>
+</div>
 </div>
 			<!-- メールアドレス -->
 			<div class="confirm-item">
