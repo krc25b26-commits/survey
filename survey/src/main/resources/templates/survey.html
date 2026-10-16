@@ -19,7 +19,8 @@
 				より良いサービスのため、アンケートにご協力ください。</p>
 		</div>
 
-		<form action="/survey/confirm" method="post" id="form" th:object="${form}">
+		<form action="/survey/confirm" method="post" id="form" th:object="${form}"
+      enctype="multipart/form-data">
 
 			<input type="hidden" name="storeName" th:value="${store.name}">
 			<input type="hidden" name="storeId" th:value="${store.id}">
@@ -231,6 +232,15 @@
 							<textarea id="comment" name="comment" rows="5" placeholder="ご意見・ご感想をご入力ください"
 								th:field="*{comment}"></textarea>
 						</div>
+
+						<!-- 写真 -->
+<div class="form-group">
+  <label for="imageFile">写真 <span class="optional">任意</span></label>
+  <span class="form-help">jpeg / png / webp、5MBまで。確認画面から戻った場合は選び直してください</span>
+  <input type="file" id="imageFile" name="imageFile" accept="image/jpeg,image/png,image/webp">
+  <input type="hidden" th:field="*{imagePath}">
+  <div th:if="${#fields.hasErrors('imagePath')}" th:errors="*{imagePath}" style="color: #f38ba8;"></div>
+</div>
 						<!-- メールアドレス -->
 						<div class="form-group">
 							<label for="email">メールアドレス
