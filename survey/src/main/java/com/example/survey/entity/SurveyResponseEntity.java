@@ -59,5 +59,14 @@ public class SurveyResponseEntity {
 //	日時
 	@Column(name = "created_at")
 	private String date;
-	
+
+	// SurveyResponseEntity
+@Column(name = "image_path")
+private String imagePath;
+
+// SurveyForm
+private String imagePath;
+
+// SurveyDto
+private String imagePath;
 }
