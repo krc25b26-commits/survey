@@ -1,28 +1,183 @@
+`response.html`
+
+```html
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>回答一覧</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アンケート回答一覧</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 20px;
+            font-family: Arial, "Yu Gothic", sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .count {
+            margin-bottom: 15px;
+            color: #666;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th, td {
+            padding: 14px;
+            border: 1px solid #ddd;
+            text-align: left;
+            vertical-align: top;
+            line-height: 1.6;
+        }
+
+        th {
+            background: #f0f4f8;
+            white-space: nowrap;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        .photo {
+            display: block;
+            max-width: 150px;
+            max-height: 120px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        .no-photo {
+            color: #999;
+        }
+
+        .empty {
+            padding: 40px;
+            text-align: center;
+            color: #777;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 22px;
+            background: #3477ae;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        .back-link:hover {
+            background: #285e8c;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px 8px;
+            }
+
+            .container {
+                padding: 18px 12px;
+            }
+
+            h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <h1>回答一覧</h1>
+<div class="container">
 
-  <p th:if="${#lists.isEmpty(list)}">回答はまだありません。</p>
+    <h1>アンケート回答一覧</h1>
 
-  <table th:unless="${#lists.isEmpty(list)}" border="1">
-    <thead>
-      <tr>
-        <th>名前</th>
-        <th>日付</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="value : ${list}">
-        <td th:text="${value.name}"></td>
-        <td th:text="${value.date}"></td>
-      </tr>
-    </tbody>
-  </table>
+    <p class="count">
+        回答件数：
+        <strong th:text="${#lists.size(list)}">0</strong> 件
+    </p>
+
+    <div class="table-wrapper" th:if="${!#lists.isEmpty(list)}">
+        <table>
+            <thead>
+            <tr>
+                <th>名前</th>
+                <th>年齢</th>
+                <th>来店頻度</th>
+                <th>来店目的</th>
+                <th>写真</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="response : ${list}">
+                <td th:text="${response.name}">回答者</td>
+
+                <td th:text="${response.age}">年齢</td>
+
+                <td th:text="${response.frequency}">来店頻度</td>
+
+                <td th:text="${response.purpose}">来店目的</td>
+
+                <td>
+                    <img
+                        th:if="${response.imagePath != null
+                                and !#strings.isEmpty(response.imagePath)}"
+                        th:src="${imageUrls[response.imagePath]}"
+                        alt="回答者が添付した写真"
+                        class="photo">
+
+                    <span
+                        class="no-photo"
+                        th:if="${response.imagePath == null
+                                or #strings.isEmpty(response.imagePath)}">
+                        写真なし
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="empty" th:if="${#lists.isEmpty(list)}">
+        まだアンケート回答はありません。
+    </div>
+
+    <a class="back-link" th:href="@{/survey}">
+        アンケート画面へ戻る
+    </a>
+
+</div>
 </body>
 </html>
