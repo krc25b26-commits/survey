@@ -48,4 +48,8 @@ public class SurveyForm {
 	private String email;
 	@AssertTrue(message = "利用規約に同意してください")
 	private Boolean agreementFlg;
+
+	// SurveyForm
+private String imagePath;
+
 }
