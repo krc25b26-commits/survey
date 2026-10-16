@@ -32,6 +32,7 @@ public class SurveyController {
 	private final PurposeService purposeService;
 	private final StoreService storeService;
 	private final SurveyService surveyService;
+	private final ImageStorageService imageStorageService;   // フィールドに追加
 	
 	public StoreEntity setStore(Integer id) {
 		return storeService.findById(id);
@@ -108,4 +109,34 @@ public class SurveyController {
 		model.addAttribute("list", surveyService.findAll());
 		return "response";
 	}
+
+	@PostMapping("/confirm")
+public String confirm(@Valid @ModelAttribute("form") SurveyForm form, BindingResult result,
+        @RequestParam(required = false) MultipartFile imageFile, Model model) {
+
+    // 戻る操作で引き回された値が書き換えられていたら捨てる
+    if (!imageStorageService.isValidPath(form.getImagePath())) {
+        form.setImagePath(null);
+    }
+
+    // 入力エラーがなければ、画像をアップロード
+    if (!result.hasErrors() && imageFile != null && !imageFile.isEmpty()) {
+        try {
+            form.setImagePath(imageStorageService.upload(imageFile));
+        } catch (IllegalArgumentException e) {
+            result.rejectValue("imagePath", "image.invalid", e.getMessage());
+        } catch (IOException e) {
+            log.error("画像アップロード失敗", e);
+            result.rejectValue("imagePath", "image.failed", "画像のアップロードに失敗しました");
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            result.rejectValue("imagePath", "image.failed", "画像のアップロードに失敗しました");
+        }
+    }
+
+    if (result.hasErrors()) {
+        // 既存のまま(リストをmodelに入れて "survey" を返す)
+    }
+    // 以降も既存のまま
+}
 }
