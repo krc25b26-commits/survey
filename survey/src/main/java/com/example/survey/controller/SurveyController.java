@@ -68,18 +68,21 @@ public class SurveyController {
 	}
 
 	
+	
+		
+	
+
 	@PostMapping("/complete")
-	public String complete(@ModelAttribute("form") SurveyForm form, @RequestParam(required = false) String action, Model model) {
-		
-		log.info("{}", form);
-		log.info("{}", surveyService.setEntity(form));
-		log.info("id:{}", surveyService.findByResponseId());
-		
+public String complete(@ModelAttribute("form") SurveyForm form, ...) {
+    if (!imageStorageService.isValidPath(form.getImagePath())) {
+        form.setImagePath(null);   // 不正な値は保存しない
+    }
+    // 以降は既存のまま
 		surveyService.save(surveyService.setEntity(form));
 		purposeService.save(form.getPurpose(), surveyService.findByResponseId());
 
 		return "redirect:/survey/complete";
-	}
+}
 	
 	@GetMapping("/complete")
 	public String complete() {
