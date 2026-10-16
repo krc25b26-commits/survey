@@ -20,6 +20,19 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
+```css
+/* 添付写真 */
+.confirm-image {
+    display: block;
+    max-width: 100%;
+    width: auto;
+    max-height: 300px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+}
+```
+
 .confirm-header {
     text-align: center;
     margin-bottom: 35px;
