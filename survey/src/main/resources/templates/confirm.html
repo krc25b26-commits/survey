@@ -132,6 +132,14 @@
 				<div class="confirm-value comment" th:if="*{comment == ''}" th:text="未回答"></div>
 			</div>
 
+			<!-- 写真 -->
+<div class="confirm-item" th:if="${dto.imagePath != null}">
+	<div class="confirm-label">写真</div>
+	<div class="confirm-value">
+		<img th:src="${@imageStorageService.publicUrl(dto.imagePath)}"
+		     alt="添付した写真" style="max-width: 300px;">
+	</div>
+</div>
 			<!-- メールアドレス -->
 			<div class="confirm-item">
 				<div class="confirm-label">メールアドレス</div>
@@ -169,6 +177,7 @@
 			<input type="hidden" name="hamburgSatisfaction" th:value="*{hamburgSatisfaction}">
 			<input type="hidden" name="comment" th:value="*{comment}">
 			<input type="hidden" name="email" th:value="*{email}">
+			<input type="hidden" name="imagePath" th:value="${dto.imagePath}">
 			<input type="hidden" name="agreementFlg" th:value="*{agreementFlg}">
 			
 			<!-- ボタン -->
