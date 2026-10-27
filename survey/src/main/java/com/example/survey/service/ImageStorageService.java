@@ -7,6 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Set;
 import java.util.UUID;
+import java.net.InetAddress;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,31 @@ public class ImageStorageService {
 
     /** 保存して、バケット内のパスを返す(DBにはこれを保存する) */
     public String upload(MultipartFile file) throws IOException, InterruptedException {
+        supabaseUrl = supabaseUrl.trim().replaceAll("/+$", "");
+
+try {
+    URI uri = URI.create(supabaseUrl);
+
+    System.out.println("Supabase host: " + uri.getHost());
+
+    InetAddress address =
+        InetAddress.getByName(uri.getHost());
+
+    System.out.println(
+        "Supabase DNS resolved: "
+        + address.getHostAddress()
+    );
+
+} catch (Exception e) {
+    System.err.println(
+        "Supabase URL / DNS error: "
+        + e.getClass().getSimpleName()
+        + ": " + e.getMessage()
+    );
+    throw new IOException(
+        "SupabaseのURLまたはDNSを確認してください", e
+    );
+}
         String type = file.getContentType();
         if (type == null || !ALLOWED.contains(type)) {
             throw new IllegalArgumentException("jpeg / png / webp のみアップロードできます");
