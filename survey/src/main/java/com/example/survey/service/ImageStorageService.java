@@ -1,5 +1,5 @@
 package com.example.survey.service;
-
+import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -65,5 +65,16 @@ private static final Pattern PATH_PATTERN =
 
 public boolean isValidPath(String path) {
     return path != null && PATH_PATTERN.matcher(path).matches();
+}
+    @PostConstruct
+public void checkSupabaseUrl() {
+    try {
+        URI uri = URI.create(supabaseUrl.trim());
+        System.out.println(
+            "Supabase host = " + uri.getHost()
+        );
+    } catch (Exception e) {
+        System.out.println("Supabase URLの形式が不正です");
+    }
 }
 }
