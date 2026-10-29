@@ -133,7 +133,7 @@
                 <th>名前</th>
                 <th>年齢</th>
                 <th>来店頻度</th>
-                <th>来店目的</th>
+                <th>支店名</th>
                 <th>写真</th>
             </tr>
             </thead>
@@ -142,11 +142,11 @@
             <tr th:each="response : ${list}">
                 <td th:text="${response.name}">回答者</td>
 
-                <td th:text="${response.age}">年齢</td>
+                <td th:text="${response.age.label}">年齢</td>
 
-                <td th:text="${response.frequency}">来店頻度</td>
+                <td th:text="${response.frequency.label}">来店頻度</td>
 
-                <td>未設定</td>
+                <td th:text="${response.store}">支店名</td>
 
                 <td>
                     <img
